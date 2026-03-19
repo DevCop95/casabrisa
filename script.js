@@ -8,10 +8,21 @@ const chatLauncher = document.getElementById("chat-launcher");
 const chatClose = document.getElementById("chat-close");
 const chatOverlay = document.getElementById("chat-overlay");
 const chatTriggers = Array.from(document.querySelectorAll("[data-open-chat]"));
+const quizPanel = document.querySelector(".quiz-panel");
+const quizStage = document.getElementById("quiz-stage");
+const quizStepLabel = document.getElementById("quiz-step-label");
+const quizProgressFill = document.getElementById("quiz-progress-fill");
+const quizSummary = document.getElementById("quiz-summary");
+const quizResultTitle = document.getElementById("quiz-result-title");
+const quizResultCopy = document.getElementById("quiz-result-copy");
+const quizResultList = document.getElementById("quiz-result-list");
+const quizBack = document.getElementById("quiz-back");
+const quizWhatsapp = document.getElementById("quiz-whatsapp");
 
 const KNOWLEDGE_KEY = "casa-brisa-knowledge-v1";
 const HISTORY_KEY = "casa-brisa-chat-history-v4";
 const KNOWLEDGE_VERSION = "2026-03-18";
+const QUIZ_WHATSAPP_FALLBACK = "573001234567";
 let knowledgeCache = null;
 const GREETING_SUGGESTIONS = [
   "Voy 3 dÃ­as con mi pareja y quiero algo especial",
@@ -25,6 +36,90 @@ const DEFAULT_SUGGESTIONS = [
   "Es mi primera vez y quiero saber dónde quedarme",
   "Necesito aeropuerto, reservas y una ruta tranquila",
 ];
+
+const SERVICE_QUIZ_STEPS = [
+  {
+    id: "profile",
+    question: "Como vienes a Cartagena?",
+    description: "Asi afinamos el tono del servicio desde el primer paso.",
+    options: [
+      {
+        value: "couple",
+        title: "Pareja o aniversario",
+        description: "Quieres algo especial, comodo o con detalles mejor cuidados.",
+      },
+      {
+        value: "first_time",
+        title: "Primera vez",
+        description: "Necesitas filtro, zona y una lectura clara de la ciudad.",
+      },
+      {
+        value: "family",
+        title: "Familia con ninos",
+        description: "La logistica y el ritmo importan tanto como el plan.",
+      },
+      {
+        value: "short_trip",
+        title: "Agenda corta",
+        description: "Vienes con poco tiempo y no quieres improvisar decisiones.",
+      },
+    ],
+  },
+  {
+    id: "duration",
+    question: "Cuantos dias vas a estar?",
+    description: "La duracion cambia mucho el nivel de apoyo que vale la pena.",
+    options: [
+      {
+        value: "2_3",
+        title: "2 o 3 dias",
+        description: "Hay poco margen, asi que conviene priorizar bien.",
+      },
+      {
+        value: "4_5",
+        title: "4 o 5 dias",
+        description: "Ya hay espacio para mezclar ciudad, reservas y descanso.",
+      },
+      {
+        value: "6_plus",
+        title: "6 dias o mas",
+        description: "Vale la pena ordenar ritmos, zonas y experiencias sin saturarte.",
+      },
+    ],
+  },
+  {
+    id: "support",
+    question: "Que tanto quieres delegar?",
+    description: "Este paso define el servicio que mas sentido tiene para ti.",
+    options: [
+      {
+        value: "basic",
+        title: "Solo quiero una ruta clara",
+        description: "Necesito orden antes del viaje, pero yo ejecuto despues.",
+      },
+      {
+        value: "reservations",
+        title: "Quiero ruta, reservas y traslados",
+        description: "Prefiero salir con lo importante mas resuelto.",
+      },
+      {
+        value: "live_support",
+        title: "Quiero apoyo por WhatsApp durante el viaje",
+        description: "Si algo cambia, quiero a alguien que me ayude a moverlo.",
+      },
+      {
+        value: "delegate",
+        title: "Quiero delegar casi todo",
+        description: "Busco tranquilidad, coordinacion fina y menos carga operativa.",
+      },
+    ],
+  },
+];
+
+const serviceQuizState = {
+  stepIndex: 0,
+  answers: {},
+};
 
 const domainKeywords = [
   "cartagena",
@@ -108,6 +203,7 @@ GREETING_SUGGESTIONS[3] = "Quiero ayuda con reservas y traslados";
 
 restoreConversation();
 renderSuggestions(resolveOpeningSuggestions());
+initializeServiceQuiz();
 
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -170,6 +266,204 @@ document.querySelectorAll("[data-reveal]").forEach((element, index) => {
   element.style.transitionDelay = `${Math.min(index * 45, 240)}ms`;
   observer.observe(element);
 });
+
+function initializeServiceQuiz() {
+  if (
+    !quizPanel ||
+    !quizStage ||
+    !quizStepLabel ||
+    !quizProgressFill ||
+    !quizSummary ||
+    !quizResultTitle ||
+    !quizResultCopy ||
+    !quizResultList ||
+    !quizBack ||
+    !quizWhatsapp
+  ) {
+    return;
+  }
+
+  quizStage.addEventListener("click", handleQuizOptionSelect);
+  quizBack.addEventListener("click", handleQuizBack);
+  renderServiceQuiz();
+}
+
+function renderServiceQuiz() {
+  const step = SERVICE_QUIZ_STEPS[serviceQuizState.stepIndex];
+
+  if (!step) {
+    return;
+  }
+
+  const currentAnswer = serviceQuizState.answers[step.id];
+  const progress = ((serviceQuizState.stepIndex + 1) / SERVICE_QUIZ_STEPS.length) * 100;
+
+  quizSummary.hidden = true;
+  quizWhatsapp.hidden = true;
+  quizBack.hidden = serviceQuizState.stepIndex === 0;
+  quizBack.textContent = "Atras";
+  quizStepLabel.textContent = `Paso ${serviceQuizState.stepIndex + 1} de ${SERVICE_QUIZ_STEPS.length}`;
+  quizProgressFill.style.width = `${progress}%`;
+
+  quizStage.innerHTML = `
+    <div class="quiz-question">
+      <h3>${step.question}</h3>
+      <p>${step.description}</p>
+    </div>
+    <div class="quiz-options">
+      ${step.options
+        .map(
+          (option) => `
+            <button
+              type="button"
+              class="quiz-option ${currentAnswer === option.value ? "is-selected" : ""}"
+              data-quiz-step="${step.id}"
+              data-quiz-value="${option.value}"
+            >
+              <strong>${option.title}</strong>
+              <span>${option.description}</span>
+            </button>
+          `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function handleQuizOptionSelect(event) {
+  const option = event.target.closest(".quiz-option");
+
+  if (!option) {
+    return;
+  }
+
+  const { quizStep, quizValue } = option.dataset;
+  serviceQuizState.answers[quizStep] = quizValue;
+
+  if (serviceQuizState.stepIndex === SERVICE_QUIZ_STEPS.length - 1) {
+    showQuizSummary();
+    return;
+  }
+
+  serviceQuizState.stepIndex += 1;
+  renderServiceQuiz();
+}
+
+function handleQuizBack() {
+  if (quizWhatsapp.hidden) {
+    if (serviceQuizState.stepIndex === 0) {
+      return;
+    }
+
+    serviceQuizState.stepIndex -= 1;
+    renderServiceQuiz();
+    return;
+  }
+
+  quizWhatsapp.hidden = true;
+  serviceQuizState.stepIndex = SERVICE_QUIZ_STEPS.length - 1;
+  renderServiceQuiz();
+}
+
+function showQuizSummary() {
+  const result = buildQuizRecommendation(serviceQuizState.answers);
+  const whatsappNumber = sanitizeWhatsappNumber(
+    quizPanel.dataset.whatsappNumber || QUIZ_WHATSAPP_FALLBACK,
+  );
+
+  quizStage.innerHTML = "";
+  quizSummary.hidden = false;
+  quizBack.hidden = false;
+  quizBack.textContent = "Cambiar respuestas";
+  quizStepLabel.textContent = "Listo para enviar";
+  quizProgressFill.style.width = "100%";
+  quizResultTitle.textContent = result.title;
+  quizResultCopy.textContent = result.copy;
+  quizResultList.innerHTML = result.highlights.map((item) => `<li>${item}</li>`).join("");
+  quizWhatsapp.href = buildQuizWhatsappUrl(whatsappNumber, result, serviceQuizState.answers);
+  quizWhatsapp.hidden = false;
+}
+
+function buildQuizRecommendation(answers) {
+  const profileLabel = getQuizOptionLabel("profile", answers.profile);
+  const durationLabel = getQuizOptionLabel("duration", answers.duration);
+  const supportLabel = getQuizOptionLabel("support", answers.support);
+  const wantsVip = answers.support === "delegate";
+  const wantsExperience =
+    wantsVip ||
+    answers.support === "reservations" ||
+    answers.support === "live_support" ||
+    answers.profile === "family" ||
+    answers.profile === "first_time";
+
+  if (wantsVip) {
+    return {
+      title: "Plan VIP · Mayordomia Turistica",
+      copy:
+        "Tiene mas sentido para viajes delicados, fechas especiales o personas que quieren delegar la operacion casi completa.",
+      highlights: [
+        `Perfil detectado: ${profileLabel}.`,
+        `Duracion estimada: ${durationLabel}.`,
+        `Necesidad principal: ${supportLabel}.`,
+        "La recomendacion apunta a coordinacion integral, proveedores y seguimiento mas fino.",
+      ],
+    };
+  }
+
+  if (wantsExperience) {
+    return {
+      title: "Plan Experiencia · Asistencia Virtual",
+      copy:
+        "Es el mejor equilibrio cuando quieres ruta clara, reservas, traslados o apoyo por WhatsApp mientras el viaje ya esta pasando.",
+      highlights: [
+        `Perfil detectado: ${profileLabel}.`,
+        `Duracion estimada: ${durationLabel}.`,
+        `Necesidad principal: ${supportLabel}.`,
+        "La recomendacion apunta a acompanamiento real sin subir todavia al nivel VIP.",
+      ],
+    };
+  }
+
+  return {
+    title: "Plan Basico · Itinerario Inteligente",
+    copy:
+      "Te conviene si lo que buscas es llegar con decisiones claras antes de viajar, pero sin acompanamiento activo durante la estadia.",
+    highlights: [
+      `Perfil detectado: ${profileLabel}.`,
+      `Duracion estimada: ${durationLabel}.`,
+      `Necesidad principal: ${supportLabel}.`,
+      "La recomendacion apunta a claridad previa, filtros utiles y menos improvisacion.",
+    ],
+  };
+}
+
+function getQuizOptionLabel(stepId, value) {
+  const step = SERVICE_QUIZ_STEPS.find((item) => item.id === stepId);
+  const option = step?.options.find((item) => item.value === value);
+  return option ? option.title : "Sin definir";
+}
+
+function sanitizeWhatsappNumber(value) {
+  return String(value || "")
+    .replace(/\D/g, "")
+    .trim();
+}
+
+function buildQuizWhatsappUrl(number, result, answers) {
+  const safeNumber = number || QUIZ_WHATSAPP_FALLBACK;
+  const message = [
+    "Hola Casa Brisa, acabo de completar el cuestionario de la web y quiero continuar.",
+    "",
+    `- Tipo de viaje: ${getQuizOptionLabel("profile", answers.profile)}`,
+    `- Duracion: ${getQuizOptionLabel("duration", answers.duration)}`,
+    `- Nivel de ayuda: ${getQuizOptionLabel("support", answers.support)}`,
+    `- Servicio sugerido: ${result.title}`,
+    "",
+    "Quiero que me orienten con el siguiente paso.",
+  ].join("\n");
+
+  return `https://wa.me/${safeNumber}?text=${encodeURIComponent(message)}`;
+}
 
 function answerQuestion(input) {
   const normalized = normalize(input);

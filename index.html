@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Casa Brisa | Asistencia turística para Cartagena</title>
+    <title>Casa Brisa | Asistencia turistica para Cartagena</title>
     <meta
       name="description"
-      content="Asistencia turística para Cartagena con itinerarios, reservas, traslados y acompañamiento remoto."
+      content="Asistencia turistica para Cartagena con itinerarios, reservas, traslados y acompanamiento remoto."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="top-strip">Reservas claras, traslados resueltos y apoyo durante tu viaje.</div>
+    <div class="top-strip">Murallas, balcones, brisa del Caribe y apoyo real para tu viaje.</div>
 
     <div class="page-shell">
       <header class="site-header" data-reveal>
@@ -25,7 +25,7 @@
           <span class="brand-mark">CB</span>
           <span class="brand-copy">
             <strong>Casa Brisa</strong>
-            <small>Asistencia turística remota para Cartagena</small>
+            <small>La Heroica, llevada a una experiencia más clara y mejor pensada</small>
           </span>
         </a>
 
@@ -43,27 +43,63 @@
 
       <main>
         <section class="booking-hero" id="inicio">
-          <aside class="destination-panel" data-reveal>
-            <p class="panel-kicker">Elige tu viaje</p>
-            <h2>Cartagena se siente distinta según cómo vengas.</h2>
-            <ul class="destination-list">
-              <li>Pareja y aniversario</li>
-              <li>Primera vez en Cartagena</li>
-              <li>Familia con niños</li>
-              <li>Viaje corto con reservas</li>
-              <li>Traslado aeropuerto + ciudad</li>
-              <li>Ruta tranquila de 3 o 4 días</li>
-            </ul>
+          <aside
+            class="destination-panel quiz-panel"
+            data-reveal
+            data-whatsapp-number="573015185270"
+          >
+            <p class="panel-kicker">Empieza aqui</p>
+            <h2>Define tu viaje en 3 pasos y recibe una recomendacion clara.</h2>
+            <p class="quiz-intro">
+              Filtramos el nivel de apoyo que mejor encaja contigo y, si quieres seguir,
+              dejas listo el paso a WhatsApp sin explicar todo desde cero.
+            </p>
+
+            <div class="quiz-shell" id="service-quiz">
+              <div class="quiz-progress">
+                <span class="quiz-step-label" id="quiz-step-label">Paso 1 de 3</span>
+                <div class="quiz-progress-bar" aria-hidden="true">
+                  <span id="quiz-progress-fill"></span>
+                </div>
+              </div>
+
+              <div class="quiz-stage" id="quiz-stage"></div>
+
+              <div class="quiz-summary" id="quiz-summary" hidden>
+                <p class="quiz-summary-label">Servicio sugerido</p>
+                <h3 id="quiz-result-title">Plan Experiencia</h3>
+                <p id="quiz-result-copy"></p>
+                <ul class="quiz-result-list" id="quiz-result-list"></ul>
+              </div>
+
+              <div class="quiz-actions">
+                <button type="button" class="button button-ghost quiz-back" id="quiz-back" hidden>
+                  Atrás
+                </button>
+                <a
+                  class="button button-primary quiz-whatsapp"
+                  id="quiz-whatsapp"
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  hidden
+                >
+                  Continuar por WhatsApp
+                </a>
+              </div>
+            </div>
           </aside>
 
           <article class="hero-visual" data-reveal>
             <div class="hero-overlay">
-              <p class="hero-tag">Cartagena · reservas · traslados · WhatsApp</p>
-              <h1>Reserva tu viaje con una ruta clara desde antes de aterrizar.</h1>
+              <p class="hero-tag">Cartagena bien pensada</p>
+              <h1>Organiza tu viaje antes de aterrizar.</h1>
               <p class="hero-description">
-                Te ayudamos a elegir zona, ritmo, reservas y nivel de acompañamiento para
-                que Cartagena no se convierta en una suma de decisiones improvisadas.
+                Zonas, reservas, traslados y apoyo real para que Cartagena se sienta clara
+                desde el primer dia.
               </p>
+
+
               <div class="hero-actions">
                 <a class="button button-primary" href="#contacto" data-open-chat>Hablar con Brisa</a>
                 <a class="button button-ghost" href="#planes">Ver planes</a>
@@ -86,45 +122,100 @@
           </article>
         </section>
 
-        <section class="service-ribbon" data-reveal aria-label="Servicios destacados">
-          <div class="service-track">
-            <span>Aeropuerto</span>
-            <span>Restaurantes</span>
-            <span>Islas del Rosario</span>
-            <span>Rooftops</span>
-            <span>Spa</span>
-            <span>Familia</span>
-            <span>Aniversario</span>
-            <span>Primera vez</span>
-            <span>Aeropuerto</span>
-            <span>Restaurantes</span>
-            <span>Islas del Rosario</span>
-            <span>Rooftops</span>
-          </div>
-        </section>
+<section class="category-ribbon" data-reveal aria-label="Guiños visuales de Cartagena">
+  <div class="category-track">
+    <article class="category-card">
+      <img
+        src="img/torredelreloj.jpg"
+        alt="Torre del Reloj en Cartagena"
+      />
+      <div class="category-copy">
+        <small>Torre del Reloj</small>
+        <strong>Entrada clásica al centro histórico</strong>
+      </div>
+    </article>
 
-        <section class="quick-grid">
-          <article class="quick-card" data-reveal>
-            <small>Llegada</small>
-            <strong>Aeropuerto y traslados</strong>
-            <span>Para que el viaje empiece resuelto desde el minuto uno.</span>
-          </article>
-          <article class="quick-card" data-reveal>
-            <small>Ruta</small>
-            <strong>Itinerarios bien filtrados</strong>
-            <span>Menos listas eternas, más decisiones útiles según tu viaje.</span>
-          </article>
-          <article class="quick-card" data-reveal>
-            <small>Reservas</small>
-            <strong>Cenas, rooftop, spa y experiencias</strong>
-            <span>Con hora, ritmo y logística pensados para que sí fluyan.</span>
-          </article>
-          <article class="quick-card" data-reveal>
-            <small>Soporte</small>
-            <strong>Brisa por WhatsApp</strong>
-            <span>Si llueve o cambia el plan, no te quedas en blanco.</span>
-          </article>
-        </section>
+    <article class="category-card">
+      <img
+        src="img/getsemani.jpg"
+        alt="Getsemani en Cartagena"
+      />
+      <div class="category-copy">
+        <small>Getsemaní</small>
+        <strong>Color, calle y energía local</strong>
+      </div>
+    </article>
+
+    <article class="category-card">
+      <img
+        src="img/islarosario.jpg"
+        alt="Islas del Rosario en Cartagena"
+      />
+      <div class="category-copy">
+        <small>Rosario</small>
+        <strong>Mar abierto, descanso y escape</strong>
+      </div>
+    </article>
+
+    <article class="category-card">
+      <img
+        src="img/murallas.jpg"
+        alt="Murallas de Cartagena"
+      />
+      <div class="category-copy">
+        <small>Murallas</small>
+        <strong>Piedra, atardecer y brisa</strong>
+      </div>
+    </article>
+
+    <article class="category-card">
+      <img
+        src="img/balcones.jpg"
+        alt="Balcones coloniales de Cartagena"
+      />
+      <div class="category-copy">
+        <small>Balcones</small>
+        <strong>Flores, puertas y sombra colonial</strong>
+      </div>
+    </article>
+
+    <article class="category-card">
+      <img
+        src="img/sanfelipe.jpg"
+        alt="Castillo de San Felipe en Cartagena"
+      />
+      <div class="category-copy">
+        <small>San Felipe</small>
+        <strong>Historia, piedra y escala heroica</strong>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<section class="quick-grid">
+  <article class="quick-card" data-reveal>
+    <small>Llegada</small>
+    <strong>Rafael Núñez y entrada limpia</strong>
+    <span>Para entrar a Cartagena sin arrancar improvisando desde el aeropuerto.</span>
+  </article>
+  <article class="quick-card" data-reveal>
+    <small>Ruta</small>
+    <strong>Centro, San Diego y Getsemaní</strong>
+    <span>Menos listas eternas, más decisiones útiles según el ritmo real del viaje.</span>
+  </article>
+  <article class="quick-card" data-reveal>
+    <small>Reservas</small>
+    <strong>Rooftops, cenas y Rosario</strong>
+    <span>Con hora, ritmo y logística pensados para que todo se sienta bien conectado.</span>
+  </article>
+  <article class="quick-card" data-reveal>
+    <small>Soporte</small>
+    <strong>Brisa durante La Heroica</strong>
+    <span>Si llueve, cambia el mar o se mueve una reserva, no te quedas en blanco.</span>
+  </article>
+</section>
+
 
         <section class="section-head" data-reveal>
           <p class="eyebrow">Planes</p>
