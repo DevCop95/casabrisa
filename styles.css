@@ -702,7 +702,7 @@ main {
   width: max-content;
   padding: 2px 2px 8px;
   will-change: transform;
-  animation: category-drift 16s ease-in-out infinite alternate;
+  animation: category-drift 24s linear infinite;
 }
 
 .category-track::-webkit-scrollbar {
@@ -826,7 +826,6 @@ main {
   justify-items: start;
   text-align: left;
 }
-
 
 .section-head h2,
 .travel-card h2,
@@ -1461,14 +1460,14 @@ main {
   }
 }
 
-@media (max-width: 1080px) {
+  @media (max-width: 1080px) {
   .site-header {
     grid-template-columns: 1fr;
-    justify-items: start;
+    justify-items: stretch;
   }
 
   .site-nav {
-    justify-content: flex-start;
+    justify-content: center;
     overflow-x: auto;
     width: 100%;
     padding-bottom: 4px;
@@ -1531,8 +1530,10 @@ main {
   }
 
   .site-header {
-    position: static;
-    top: auto;
+    position: sticky;
+    top: 10px;
+    z-index: 30;
+    justify-items: stretch;
     gap: 12px;
     margin-bottom: 16px;
     padding: 12px;
@@ -1584,14 +1585,14 @@ main {
   }
 
   main {
-    gap: 24px;
+    gap: 32px;
   }
 
   .destination-panel,
   .travel-card,
   .plan-card,
   .cta-band {
-    padding: 20px;
+    padding: 24px;
   }
 
   .hero-visual {
@@ -1623,38 +1624,38 @@ main {
   }
 
   .section-head h2 {
-    max-width: 11ch;
-    font-size: clamp(1.78rem, 7.4vw, 2.02rem);
-    line-height: 0.98;
+    max-width: none;
+    font-size: clamp(1.62rem, 6.9vw, 1.92rem);
+    line-height: 1.02;
   }
 
   .travel-card h2,
   .cta-copy h2 {
     max-width: none;
-    font-size: clamp(1.62rem, 6.8vw, 1.92rem);
-    line-height: 0.98;
+    font-size: clamp(1.5rem, 6.2vw, 1.76rem);
+    line-height: 1.02;
   }
 
   .hero-description {
-    max-width: 24ch;
-    margin-top: 10px;
-    font-size: 0.9rem;
-    line-height: 1.42;
+    max-width: 26ch;
+    margin-top: 12px;
+    font-size: 0.92rem;
+    line-height: 1.48;
   }
 
   .button,
   .chat-form button {
-    min-height: 44px;
-    padding: 0 15px;
-    font-size: 0.9rem;
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 0.92rem;
   }
 
   .quiz-shell {
-    gap: 16px;
+    gap: 20px;
   }
 
   .quiz-option {
-    padding: 15px 16px;
+    padding: 18px;
   }
 
   .quiz-actions {
@@ -1699,18 +1700,18 @@ main {
   }
 
   .travel-card-photo {
-    min-height: 380px;
-    padding: 16px;
+    min-height: 440px;
+    padding: 18px;
   }
 
   .travel-card-overlay {
     width: 100%;
-    padding: 18px;
-    border-radius: 22px;
+    padding: 22px;
+    border-radius: 24px;
   }
 
   .cta-actions {
-    gap: 14px;
+    gap: 18px;
   }
 
   .cta-button {
@@ -1799,24 +1800,28 @@ main {
     flex: 0 0 auto;
   }
 
-  .section-head h2,
+  .section-head h2 {
+    max-width: none;
+    font-size: 1.56rem;
+    line-height: 1.02;
+  }
+
   .travel-card h2,
   .cta-copy h2 {
     max-width: none;
-    font-size: 1.58rem;
-    line-height: 0.98;
+    font-size: 1.44rem;
+    line-height: 1.02;
   }
 
   .plan-card h3 {
-    font-size: 1.48rem;
-    line-height: 1.04;
+    font-size: 1.42rem;
+    line-height: 1.06;
   }
 
   .persona-card h3 {
-    font-size: 1.18rem;
-    line-height: 1.08;
+    font-size: 1.12rem;
+    line-height: 1.1;
   }
-
   .hero-trust {
     display: none;
   }
@@ -1833,7 +1838,7 @@ main {
   }
 
   100% {
-    transform: translateX(-96px);
+    transform: translateX(calc(-50% - 7px));
   }
 }
 @keyframes service-slide {
