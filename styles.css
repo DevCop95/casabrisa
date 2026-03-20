@@ -966,10 +966,9 @@ main {
 
 .persona-card {
   display: grid;
-  align-content: start;
-  gap: 14px;
-  min-height: 220px;
-  padding: 24px;
+  overflow: hidden;
+  min-height: 100%;
+  padding: 0;
   border-radius: 28px;
   background: var(--paper);
   transition:
@@ -979,30 +978,61 @@ main {
 }
 
 .persona-card:nth-child(even) {
-  background: #eef3f1;
+  background: var(--paper);
 }
 
+.persona-media {
+  position: relative;
+  height: 176px;
+  min-height: 176px;
+  max-height: 176px;
+  overflow: hidden;
+}
+
+.persona-media img {
+  display: block;
+  width: 100%;
+  height: 176px;
+  object-fit: cover;
+  object-position: center;
+}
+
+
 .persona-icon {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: max-content;
   min-height: 34px;
   padding: 0 14px;
-  border: 1px solid rgba(22, 50, 71, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   color: var(--ink);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 253, 249, 0.92);
+  backdrop-filter: blur(4px);
+}
+
+.persona-body {
+  display: grid;
+  gap: 12px;
+  padding: 20px 20px 22px;
+}
+
+.persona-body p {
+  margin: 0;
 }
 
 .persona-card h3 {
   margin: 0;
-  font-size: 1.48rem;
-  line-height: 1.05;
+  font-size: 1.38rem;
+  line-height: 1.08;
   letter-spacing: -0.04em;
 }
 
@@ -1694,8 +1724,19 @@ main {
     min-height: 0;
   }
 
+  .persona-media {
+    height: 160px;
+    min-height: 160px;
+    max-height: 160px;
+  }
+
+  .persona-body {
+    gap: 10px;
+    padding: 18px 18px 20px;
+  }
+
   .persona-card h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     line-height: 1.08;
   }
 
@@ -1818,10 +1859,21 @@ main {
     line-height: 1.06;
   }
 
+  .persona-media {
+    height: 148px;
+    min-height: 148px;
+    max-height: 148px;
+  }
+
+  .persona-body {
+    padding: 16px 16px 18px;
+  }
+
   .persona-card h3 {
-    font-size: 1.12rem;
+    font-size: 1.08rem;
     line-height: 1.1;
   }
+
   .hero-trust {
     display: none;
   }
