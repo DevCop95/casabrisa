@@ -1530,8 +1530,9 @@ main {
 
 @media (max-width: 720px) {
   :root {
-    --page-width: calc(100% - 20px);
+    --page-width: calc(100% - 24px);
   }
+
 
   body::before {
     top: -80px;
@@ -1564,12 +1565,11 @@ main {
     top: 10px;
     z-index: 30;
     justify-items: stretch;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 12px;
-    border-radius: 18px;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 20px;
   }
-
   .brand {
     width: 100%;
     gap: 12px;
@@ -1615,15 +1615,21 @@ main {
   }
 
   main {
-    gap: 32px;
+    gap: 36px;
   }
 
   .destination-panel,
   .travel-card,
   .plan-card,
   .cta-band {
-    padding: 24px;
+    padding: 26px;
   }
+
+  .quick-card,
+  .persona-body {
+    padding: 22px;
+  }
+
 
   .hero-visual {
     min-height: 440px;
@@ -1699,21 +1705,29 @@ main {
   }
 
   .category-track {
-    gap: 12px;
+    gap: 14px;
   }
 
   .category-card {
-    flex-basis: 148px;
-    min-height: 164px;
+    flex-basis: 156px;
+    min-height: 172px;
   }
 
   .quick-card {
-    min-height: 0;
+    min-height: 164px;
   }
 
   .section-head {
-    gap: 8px;
+    gap: 10px;
   }
+
+  .plan-grid,
+  .persona-grid,
+  .quick-grid,
+  .travel-grid {
+    gap: 20px;
+  }
+
 
   .plan-card h3 {
     font-size: 1.68rem;
@@ -1741,19 +1755,24 @@ main {
   }
 
   .travel-card-photo {
-    min-height: 440px;
-    padding: 18px;
+    min-height: 480px;
+    padding: 20px;
   }
 
   .travel-card-overlay {
-    width: 100%;
-    padding: 22px;
-    border-radius: 24px;
+    width: min(440px, 100%);
+    padding: 24px;
+    border-radius: 26px;
   }
 
   .cta-actions {
-    gap: 18px;
+    gap: 20px;
   }
+
+  .cta-pills {
+    gap: 12px;
+  }
+
 
   .cta-button {
     width: 100%;

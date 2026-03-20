@@ -25,11 +25,12 @@ const KNOWLEDGE_VERSION = "2026-03-18";
 const QUIZ_WHATSAPP_FALLBACK = "573001234567";
 let knowledgeCache = null;
 const GREETING_SUGGESTIONS = [
-  "Voy 3 dÃ­as con mi pareja y quiero algo especial",
-  "Voy con niÃ±os 4 dÃ­as y quiero algo cÃ³modo",
+  "Voy 3 días con mi pareja y quiero algo especial",
+  "Voy con niños 4 días y quiero algo cómodo",
   "Es mi primera vez en Cartagena",
   "Quiero ayuda con reservas y traslados",
 ];
+
 const DEFAULT_SUGGESTIONS = [
   "Viajamos en pareja 3 días y queremos algo especial",
   "Voy con niños 4 días y quiero algo cómodo",
