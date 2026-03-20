@@ -35,62 +35,16 @@
           <a href="#perfiles">Perfiles</a>
           <a href="#contacto" data-open-chat>Soporte</a>
         </nav>
-
         <div class="header-actions">
-          <button type="button" class="mini-action" data-open-chat>Asesoría</button>
+          <button type="button" class="mini-action" data-open-quiz>Asesoría</button>
         </div>
+
       </header>
 
       <main>
-        <section class="booking-hero" id="inicio">
-          <aside
-            class="destination-panel quiz-panel"
-            data-reveal
-            data-whatsapp-number="573015371575"
-          >
-            <p class="panel-kicker">Empieza aqui</p>
-            <h2>Define tu viaje en 3 pasos y recibe una recomendacion clara.</h2>
-            <p class="quiz-intro">
-              Filtramos el nivel de apoyo que mejor encaja contigo y, si quieres seguir,
-              dejas listo el paso a WhatsApp sin explicar todo desde cero.
-            </p>
-
-            <div class="quiz-shell" id="service-quiz">
-              <div class="quiz-progress">
-                <span class="quiz-step-label" id="quiz-step-label">Paso 1 de 3</span>
-                <div class="quiz-progress-bar" aria-hidden="true">
-                  <span id="quiz-progress-fill"></span>
-                </div>
-              </div>
-
-              <div class="quiz-stage" id="quiz-stage"></div>
-
-              <div class="quiz-summary" id="quiz-summary" hidden>
-                <p class="quiz-summary-label">Servicio sugerido</p>
-                <h3 id="quiz-result-title">Plan Experiencia</h3>
-                <p id="quiz-result-copy"></p>
-                <ul class="quiz-result-list" id="quiz-result-list"></ul>
-              </div>
-
-              <div class="quiz-actions">
-                <button type="button" class="button button-ghost quiz-back" id="quiz-back" hidden>
-                  Atrás
-                </button>
-                <a
-                  class="button button-primary quiz-whatsapp"
-                  id="quiz-whatsapp"
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                  hidden
-                >
-                  Continuar por WhatsApp
-                </a>
-              </div>
-            </div>
-          </aside>
-
+        <section class="booking-hero booking-hero-full" id="inicio">
           <article class="hero-visual" data-reveal>
+
             <div class="hero-overlay">
               <p class="hero-tag">Cartagena bien pensada</p>
               <h1>Organiza tu viaje antes de aterrizar.</h1>
@@ -262,26 +216,50 @@
 
 <section class="quick-grid">
   <article class="quick-card" data-reveal>
-    <small>Llegada</small>
-    <strong>Rafael Núñez y entrada limpia</strong>
-    <span>Para entrar a Cartagena sin arrancar improvisando desde el aeropuerto.</span>
+    <div class="quick-media">
+      <img src="img/aeropuerto.jpg" alt="Llegada al aeropuerto de Cartagena" />
+    </div>
+    <div class="quick-body">
+      <small>Llegada</small>
+      <strong>Rafael Núñez y entrada limpia</strong>
+      <span>Para entrar a Cartagena sin arrancar improvisando desde el aeropuerto.</span>
+    </div>
   </article>
+
   <article class="quick-card" data-reveal>
-    <small>Ruta</small>
-    <strong>Centro, San Diego y Getsemaní</strong>
-    <span>Menos listas eternas, más decisiones útiles según el ritmo real del viaje.</span>
+    <div class="quick-media">
+      <img src="img/getsemanipt.jpg" alt="Calle de Getsemaní en Cartagena" />
+    </div>
+    <div class="quick-body">
+      <small>Ruta</small>
+      <strong>Centro, San Diego y Getsemaní</strong>
+      <span>Menos listas eternas, más decisiones útiles según el ritmo real del viaje.</span>
+    </div>
   </article>
+
   <article class="quick-card" data-reveal>
-    <small>Reservas</small>
-    <strong>Rooftops, cenas y Rosario</strong>
-    <span>Con hora, ritmo y logística pensados para que todo se sienta bien conectado.</span>
+    <div class="quick-media">
+      <img src="img/cena.jpg" alt="Cena y reservas en Cartagena" />
+    </div>
+    <div class="quick-body">
+      <small>Reservas</small>
+      <strong>Rooftops, cenas y Rosario</strong>
+      <span>Con hora, ritmo y logística pensados para que todo se sienta bien conectado.</span>
+    </div>
   </article>
+
   <article class="quick-card" data-reveal>
-    <small>Soporte</small>
-    <strong>Brisa durante La Heroica</strong>
-    <span>Si llueve, cambia el mar o se mueve una reserva, no te quedas en blanco.</span>
+    <div class="quick-media">
+      <img src="img/brisa.jpg" alt="Soporte y asistencia durante el viaje en Cartagena" />
+    </div>
+    <div class="quick-body">
+      <small>Soporte</small>
+      <strong>Brisa durante La Heroica</strong>
+      <span>Si llueve, cambia el mar o se mueve una reserva, no te quedas en blanco.</span>
+    </div>
   </article>
 </section>
+
 
 
         <section class="section-head" data-reveal>
@@ -418,12 +396,86 @@
           </div>
           <div class="cta-actions">
             <div class="cta-pills">
+              <button type="button" class="cta-chip" data-open-chat data-prefill="Pareja · 3 días">
+                Pareja · 3 días
+              </button>
+              <button type="button" class="cta-chip" data-open-chat data-prefill="Familia · 4 días">
+                Familia · 4 días
+              </button>
+              <button type="button" class="cta-chip" data-open-chat data-prefill="Primera vez">
+                Primera vez
+              </button>
+              <button type="button" class="cta-chip" data-open-chat data-prefill="Traslados + reservas">
+                Traslados + reservas
+              </button>
+            </div>
             <button type="button" class="button button-primary cta-button" data-open-chat>
               Abrir Brisa
             </button>
           </div>
         </section>
+
       </main>
+    </div>
+
+    <div class="quiz-popup" id="quiz-popup" aria-hidden="true">
+      <button type="button" class="quiz-overlay" id="quiz-overlay" aria-label="Cerrar encuesta"></button>
+
+      <section
+        class="destination-panel quiz-panel quiz-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quiz-modal-title"
+        data-whatsapp-number="573015371575"
+      >
+        <div class="quiz-topbar">
+          <div class="quiz-brand">
+            <span class="quiz-brand-mark">CB</span>
+            <div class="quiz-brand-copy">
+              <p id="quiz-modal-title">Casa Brisa</p>
+              <small>Te recomendamos el servicio más conveniente para tu viaje en Cartagena.</small>
+            </div>
+          </div>
+
+          <button type="button" class="quiz-dismiss" id="quiz-close" aria-label="Cerrar encuesta">
+            Cerrar
+          </button>
+        </div>
+
+        <div class="quiz-shell" id="service-quiz">
+          <div class="quiz-progress">
+            <span class="quiz-step-label" id="quiz-step-label">Paso 1 de 3</span>
+            <div class="quiz-progress-bar" aria-hidden="true">
+              <span id="quiz-progress-fill"></span>
+            </div>
+          </div>
+
+          <div class="quiz-stage" id="quiz-stage"></div>
+
+          <div class="quiz-summary" id="quiz-summary" hidden>
+            <p class="quiz-summary-label">Servicio sugerido</p>
+            <h3 id="quiz-result-title">Plan Experiencia</h3>
+            <p id="quiz-result-copy"></p>
+            <ul class="quiz-result-list" id="quiz-result-list"></ul>
+          </div>
+
+          <div class="quiz-actions">
+            <button type="button" class="button button-ghost quiz-back" id="quiz-back" hidden>
+              Atrás
+            </button>
+            <a
+              class="button button-primary quiz-whatsapp"
+              id="quiz-whatsapp"
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              hidden
+            >
+              Continuar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
 
     <button
@@ -436,6 +488,7 @@
       <span class="chat-launcher-label">Soporte</span>
       <span class="chat-launcher-title">Brisa</span>
     </button>
+
 
     <div class="chat-popup" id="chat-popup" aria-hidden="true">
       <button type="button" class="chat-overlay" id="chat-overlay" aria-label="Cerrar chat"></button>

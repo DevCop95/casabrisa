@@ -8,6 +8,10 @@ const chatLauncher = document.getElementById("chat-launcher");
 const chatClose = document.getElementById("chat-close");
 const chatOverlay = document.getElementById("chat-overlay");
 const chatTriggers = Array.from(document.querySelectorAll("[data-open-chat]"));
+const quizTriggers = Array.from(document.querySelectorAll("[data-open-quiz]"));
+const quizPopup = document.getElementById("quiz-popup");
+const quizOverlay = document.getElementById("quiz-overlay");
+const quizClose = document.getElementById("quiz-close");
 const quizPanel = document.querySelector(".quiz-panel");
 const quizStage = document.getElementById("quiz-stage");
 const quizStepLabel = document.getElementById("quiz-step-label");
@@ -56,7 +60,7 @@ const SERVICE_QUIZ_STEPS = [
       },
       {
         value: "family",
-        title: "Familia con ninos",
+        title: "Familia con niños",
         description: "La logistica y el ritmo importan tanto como el plan.",
       },
       {
@@ -134,8 +138,8 @@ const domainKeywords = [
   "parejas",
   "familia",
   "familias",
-  "ninos",
-  "ninas",
+  "niños",
+  "niñas",
   "corporativo",
   "corporativos",
   "vip",
@@ -198,7 +202,7 @@ replies.greetingFollowUp =
 replies.greetingWithContext =
   "Ya te sigo. Con lo que vienes contando, lo mejor ahora es cerrar el siguiente paso del viaje en vez de arrancar de cero.";
 GREETING_SUGGESTIONS[0] = "Voy 3 dias con mi pareja y quiero algo especial";
-GREETING_SUGGESTIONS[1] = "Voy con ninos 4 dias y quiero algo comodo";
+GREETING_SUGGESTIONS[1] = "Voy con niños 4 dias y quiero algo comodo";
 GREETING_SUGGESTIONS[2] = "Es mi primera vez en Cartagena";
 GREETING_SUGGESTIONS[3] = "Quiero ayuda con reservas y traslados";
 
@@ -241,13 +245,32 @@ chatTriggers.forEach((trigger) => {
   });
 });
 
+quizTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    if (trigger.tagName === "A") {
+      event.preventDefault();
+    }
+
+    openQuizModal();
+  });
+});
+
 chatLauncher.addEventListener("click", openChat);
 chatClose.addEventListener("click", closeChat);
 chatOverlay.addEventListener("click", closeChat);
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && chatPopup.classList.contains("is-open")) {
+  if (event.key !== "Escape") {
+    return;
+  }
+
+  if (chatPopup.classList.contains("is-open")) {
     closeChat();
+    return;
+  }
+
+  if (quizPopup?.classList.contains("is-open")) {
+    closeQuizModal();
   }
 });
 
@@ -270,6 +293,9 @@ document.querySelectorAll("[data-reveal]").forEach((element, index) => {
 
 function initializeServiceQuiz() {
   if (
+    !quizPopup ||
+    !quizOverlay ||
+    !quizClose ||
     !quizPanel ||
     !quizStage ||
     !quizStepLabel ||
@@ -286,7 +312,13 @@ function initializeServiceQuiz() {
 
   quizStage.addEventListener("click", handleQuizOptionSelect);
   quizBack.addEventListener("click", handleQuizBack);
+  quizOverlay.addEventListener("click", closeQuizModal);
+  quizClose.addEventListener("click", closeQuizModal);
   renderServiceQuiz();
+
+  window.setTimeout(() => {
+    openQuizModal();
+  }, 420);
 }
 
 function renderServiceQuiz() {
@@ -517,13 +549,53 @@ function answerQuestion(input) {
   return createReply(composeKnowledgeReply(matches, profile), normalized, profile);
 }
 
+function openQuizModal() {
+  if (!quizPopup) {
+    return;
+  }
+
+  quizPopup.classList.add("is-open");
+  quizPopup.setAttribute("aria-hidden", "false");
+  document.body.classList.add("quiz-open");
+
+  window.setTimeout(() => {
+    quizStage.querySelector(".quiz-option")?.focus();
+  }, 140);
+}
+
+function closeQuizModal() {
+  if (!quizPopup) {
+    return;
+  }
+
+  quizPopup.classList.remove("is-open");
+  quizPopup.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("quiz-open");
+}
+
 function openChat() {
+  if (quizPopup?.classList.contains("is-open")) {
+    closeQuizModal();
+  }
+
   chatPopup.classList.add("is-open");
   chatPopup.setAttribute("aria-hidden", "false");
   chatLauncher.setAttribute("aria-expanded", "true");
   document.body.classList.add("chat-open");
   window.setTimeout(() => chatInput.focus(), 120);
 }
+
+function closeChat() {
+  chatPopup.classList.remove("is-open");
+  chatPopup.setAttribute("aria-hidden", "true");
+  chatLauncher.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("chat-open");
+  chatLauncher.focus();
+}
+  if (quizPopup?.classList.contains("is-open")) {
+    closeQuizModal();
+  }
+
 
 function closeChat() {
   chatPopup.classList.remove("is-open");
@@ -746,7 +818,7 @@ function buildContextFollowUps(profile) {
   if (profile.family) {
     return [
       "Quiero una zona comoda para familia",
-      "Necesito traslados con ninos",
+      "Necesito traslados con niños",
       "Quiero un ritmo tranquilo",
       "Ayudame con reservas",
     ];
@@ -849,7 +921,7 @@ function extractTripProfile(normalized) {
 
   return {
     duration: durationMatch ? Number(durationMatch[1]) : null,
-    family: hasAny(normalized, ["familia", "familias", "ninos", "ninas", "niños", "niñas"]),
+    family: hasAny(normalized, ["familia", "familias", "niños", "niñas", "niños", "niñas"]),
     couple: hasAny(normalized, ["pareja", "parejas", "romantico", "romantica"]),
     anniversary: hasAny(normalized, ["aniversario", "cumpleanos", "cumpleaños", "sorpresa"]),
     corporate: hasAny(normalized, ["corporativo", "corporativos", "trabajo", "negocio", "ejecutivo"]),
@@ -936,7 +1008,7 @@ function buildKnowledgeSeed() {
     },
     {
       id: "families",
-      topics: ["familia", "familias", "ninos", "ninas", "seguridad", "ritmo", "tranquilo"],
+      topics: ["familia", "familias", "niños", "niñas", "seguridad", "ritmo", "tranquilo"],
       summary:
         "En familia el viaje suele funcionar mejor con menos cambios de zona, horarios realistas y trayectos bien pensados.",
       details: [
