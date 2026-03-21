@@ -314,7 +314,11 @@ function initializeServiceQuiz() {
   quizBack.addEventListener("click", handleQuizBack);
   quizOverlay.addEventListener("click", closeQuizModal);
   quizClose.addEventListener("click", closeQuizModal);
+  quizWhatsapp.addEventListener("click", () => {
+    closeQuizModal();
+  });
   renderServiceQuiz();
+
 
   window.setTimeout(() => {
     openQuizModal();
@@ -592,6 +596,25 @@ function closeChat() {
   document.body.classList.remove("chat-open");
   chatLauncher.focus();
 }
+  _psychInside=false;
+  _refreshDoorLock();
+  setTimeout(()=>{
+    try{
+      if(_psychVisitor===g&&_psychPhase!=='ret'&&_psychPhase!=='fade'){
+        setDoorOpen(true,{force:true});
+      }
+    }catch(e){}
+  },900);
+
+  setTimeout(()=>{
+    try{
+      if(_psychVisitor===g&&_psychPhase!=='ret'&&_psychPhase!=='fade'){
+        _psychInside=true;
+        _refreshDoorLock();
+        setDoorOpen(false,{force:true});
+      }
+    }catch(e){}
+  },3200);
   if (quizPopup?.classList.contains("is-open")) {
     closeQuizModal();
   }
